@@ -39,7 +39,7 @@ var CpfCnpjMaskBehavior = function (val) {
         }
     };
 
-function makeRequest({ method, path, data }) {
+function makeRequest({ method, path, data }) { 
     return new Promise(async function (resolve, reject) {
         console.log(`${method} ${path}`, data);
         try {
