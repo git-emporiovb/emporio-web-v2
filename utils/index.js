@@ -30,7 +30,7 @@ const Utils = {
             return res.status(200).render(view, {
                 promo: {
                     text: promotional_banner.text || "Emporio Villa Borghese",
-                    link: promotional_banner.link || "https://emporio-web-v2-765b2736bf11.herokuapp.com/"
+                    link: promotional_banner.link || "https://emporio-web-v2-765b2736bf11.herokuapp.com"
                 },
                 user: req.user,
                 categories,
