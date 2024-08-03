@@ -79,7 +79,7 @@ router.get("/", async function (req, res) {
                 primary_category: results[l].get("primary_category"),
                 price: results[l].get("price"),
                 discount: results[l].get("discount"),
-                image: results[l].get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br"),
+                image: results[l].get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/"),
                 category: results[l].get("category")?.get("name")?.toProperCase(),
                 subcategory: results[l].get("subcategory")?.get("name")?.toProperCase()
             };
@@ -143,7 +143,7 @@ router.get("/", async function (req, res) {
               <div style="width:100px;padding: 0 15px">
                 <div class="card d-flex justify-content-center align-items-center">
                   <!-- Image -->
-                  <div class="image"><img src="${categories[m].get("image")?.url().replace("http://localhost", "https://emporiovillaborghese.com.br")}"></div>
+                  <div class="image"><img src="${categories[m].get("image")?.url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/")}"></div>
                   <!-- Body -->
                   <div class="card-body py-0 px-0 text-center">
                     <!-- Heading -->
@@ -176,9 +176,9 @@ router.get("/", async function (req, res) {
                 '" class="slide ' +
                 status +
                 '"><img class="desktop" src="' +
-                banners[i].get("image_desktop").url().replace("http://localhost", "https://emporiovillaborghese.com.br") +
+                banners[i].get("image_desktop").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/") +
                 '"><img class="mobile" src="' +
-                banners[i].get("image_mobile").url().replace("http://localhost", "https://emporiovillaborghese.com.br") +
+                banners[i].get("image_mobile").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/") +
                 '"></a>';
         }
         res.status(200).render("index", {
@@ -374,7 +374,7 @@ router.get("/search", async function (req, res) {
                 weight: results[i].get("weight"),
                 price: results[i].get("price"),
                 discount: results[i].get("discount"),
-                image: results[i].get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br")
+                image: results[i].get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/")
             };
             if (results[i].get("category")) {
                 item.category = results[i].get("category").get("name").toProperCase();
@@ -536,7 +536,7 @@ router.get("/items/*", async function (req, res) {
         console.log(process.pid, "Got item " + object.id);
         var item = {
             id: object.id,
-            image: object.get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br"),
+            image: object.get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/"),
             name: object.get("name").replace(" KG", "").toProperCase(),
             description: object.get("description"),
             sku: object.get("sku"),
@@ -624,7 +624,7 @@ router.get("/items/*", async function (req, res) {
                 price: results[i].get("price"),
                 unit: results[i].get("unit"),
                 discount: results[i].get("discount"),
-                image: results[i].get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br"),
+                image: results[i].get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/"),
                 category: results[i].get("category")?.get("name").toProperCase(),
                 subcategory: results[i].get("subcategory")?.get("name").toProperCase()
             };
@@ -725,7 +725,7 @@ router.post("/validateCart", async function (req, res) {
                             name: item.get("name").replace(" KG", "").toProperCase(),
                             unit: item.get("unit"),
                             weight: item.get("weight"),
-                            image: item.get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br"),
+                            image: item.get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/"),
                             primary_category: item.get("primary_category"),
                             secondary_category: item.get("secondary_category"),
                             quantity: Number(req.body[i].quantity),
@@ -765,7 +765,7 @@ router.post("/validateWishlist", async function (req, res) {
                     id: item.id,
                     sku: item.get("sku"),
                     name: item.get("name").replace(" KG", ""),
-                    image: item.get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br"),
+                    image: item.get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/"),
                     primary_category: item.get("primary_category"),
                     secondary_category: item.get("secondary_category"),
                     quantity: Number(req.body[i].quantity),
@@ -1565,7 +1565,7 @@ router.get("/orders", async (req, res) => {
             if (order.items[j].get("item").get("image")) {
                 images +=
                     '<div class="col-3"><div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(' +
-                    order.items[j].get("item").get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br") +
+                    order.items[j].get("item").get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/") +
                     ');background-size: contain !important;"></div></div>';
             }
         }
@@ -1714,7 +1714,7 @@ router.get("/orders/*", async (req, res) => {
                 '"> <div class="row align-items-center"> <div class="col-4 col-md-3 col-xl-2"> <!-- Image --> <a class="product-image" href="/items/' +
                 item.id +
                 '"><img src="' +
-                item.get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br") +
+                item.get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/") +
                 '" alt="' +
                 item.get("name").toProperCase() +
                 '" class="img-fluid"></a> </div> <div class="col"> <!-- Title --> <p class="mb-4 font-size-sm font-weight-bold"> <a class="text-body" href="/items/' +
@@ -2761,7 +2761,7 @@ async function parseUser(pointer) {
         id: pointer.id
     };
     if (pointer.get("image")) {
-        user.image = pointer.get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br").replace("http://localhost", "https://emporiovillaborghese.com.br");
+        user.image = pointer.get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/").replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/");
     } else {
         user.image = "/placeholder.jpg";
     }
@@ -2781,7 +2781,7 @@ async function parseUser(pointer) {
         user.vat = pointer.get("vat");
     }
     if (pointer.get("image")) {
-        user.image = pointer.get("image").url().replace("http://localhost", "https://emporiovillaborghese.com.br").replace("http://localhost", "https://emporiovillaborghese.com.br");
+        user.image = pointer.get("image").url().replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/").replace("http://localhost", "https://emporio-web-v2-765b2736bf11.herokuapp.com/");
     }
     if (pointer.get("birthday")) {
         user.birthday = pointer.get("birthday");
