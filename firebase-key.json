@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "emporio-villa-borghese-1e242",
+  "private_key_id": "cc6377b81505425c7df34a2034fc390959faafdc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCgw9ys38T98mdC\nIXs+FrS2PmgNBxuNsS5BVBwUnmh2jwGh0T7aQvm6+afjcfnmqVXWlXXvY6yxevog\nv4x2Oz9i0EFWVHxSLClbiQKPr8jHc6mlAvwrGE8GFOpZA2VEhDohzTSiI355X9xk\nphlxnThohDchJS/P8oQycqaFB01Zl6qKtVYa86wUTth45JC9AQogxG/oyRli1HGV\ngIutrX/+tBR4Z/ZR5WtLNZTobdH7mjtXejtvLm1Xhb/mkbXiUIYDYRbbHvBIvkh0\nzPxczX7yoyvP7sXKDrlzfrc676C2o0kp05Qq58T+3MlUjKuHc4ADmvJvfTtpVeMb\nIRGdvOgjAgMBAAECggEAGFWNUZ2Nc+L9PkVTIlLNh8hqd45b3Va0aa8RkQ1pQoji\n9lt16BO7OVIQ15yo9wEqvRBiiZnMyhCTS+GyoTLWpV5ghXDEYKvOlsxmVtmEyqv3\nQcLx6JQFYiZIUrDw4y4gnn0xOlmlCzo3YgTCVTA3GZrpvVqjohZTbE9uZTR1wNm2\nwBz0nL0m7/89yqA+9zKzSjDZh8JF70hvh8WXyExH+JAUf0Qnw3zZnaKz6aBzgpWL\nnkKDzEfL5vUkzh5eSxKW/XStocrqfB6zqiU2hW+dfSRvYOvh8lgWE7xLBA4X41oP\n5MZK6/VxUI1y+OgadzcyQRkX1ewFnL8jXbmci7i6AQKBgQDTDyqNvOKEGSb/0JNa\nlbt8aqgOTKniTmpGuppsAXVqeC2wkvuCYqgp/7m3pNAM7ezkYqSCe+ZVVEfCmZ8c\n9BAx1TPYKJpHCCvVfBDhkhD+ZQ1ir/DCbY4TwXmboliX3C/H5HXkVR5egz9nKnoy\nd/5XY7lpzFegTNyyyJpaLcgBlwKBgQDC/ymg5DcMY9+lM+3eA05d5RMzjjEHjkNi\nl3amvxuWOe4a1EV1Y48Vq19Vg4Dwvip+6OiptDia72VTGapukias9BG1CJgp5X8M\nV+Lmfccpg6AysKFy5Ba6CRTUkVXmi4lOGdn6gzJZHYE3DvKXof7S8IRmZEk7F2Vd\n0pqvCqjHVQKBgCAQ7NEuAmg5fhBduxWHLD4B4liR0zm72i+2yCFis1kiuyZZnna3\n0H7ZCHlbQ/TC7TvhtMbSVjNeo6xwNJlsh01a7A6KVK44EpjTyajLzWMpLThyLK0N\nggmEWpqHttgTrvq6viKbwApx/F8LOBeU3YKfdxsY3bNQGjPbgH/09q8vAoGBAJgf\n6KIUaL3JzNhdQt1JRwIJjIlUDPwQCJIKCA7eWO9CEnfr0qRaH26QW7ei+BzYvt5z\nZc+/QcndqfbCtyu76WBUqNvK8Kr+17cReXrH9XB1t6zUD6BKQVCxdQbAu3s4sM21\nbVD6uXS8h+okRy30u5BlA2W+J0NqZTJk8zhL4JBhAoGBAKwcPD8SSKDoL45reHn4\nTa3Ox+VidrB+bt4YEADvOJOHroHvzyMUg25KkkYfVLNXU80/54QdAl12/R/dsmYh\nulw/VPXe+bq+kqeKVkb+O0yU40IOUhlsVxHX4AqSxswXrvtXY5m+b57p6gfiio+4\nAmMH2g6E+3FW0ibDEVUNlc/C\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-4mdiv@emporio-villa-borghese-1e242.iam.gserviceaccount.com",
+  "client_id": "117654681836184200347",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-4mdiv%40emporio-villa-borghese-1e242.iam.gserviceaccount.com"
+}

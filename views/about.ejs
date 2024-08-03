@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<!-- Title -->
+<title>Emporio Villa Borghese - Nossa história</title>
+<%- include ("./components/head") %>
+<style type="text/css">
+  .loader {
+  margin: auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1em solid rgba(0, 0, 0, 0.1);
+  border-right: 1em solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1em solid rgba(0, 0, 0, 0.1);
+  border-left: 1em solid black;
+  -webkit-animation: load8 0.5s infinite linear;
+  animation: load8 0.5s infinite linear;
+}
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+</style>
+<meta name="robots" content="index, follow" />
+</head>
+<body id="homeSection">
+  <!-- ========== HEADER ========== -->
+  <%- include ("./components/navbar") %>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+
+    <!-- BREADCRUMB -->
+    <nav class="py-5 d-none">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+              <li class="breadcrumb-item">
+                <a class="text-gray-400" href="/">Home</a>
+              </li>
+              <li class="breadcrumb-item active">
+                Termos e Condições
+              </li>
+            </ol>
+
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <section class="pt-10 pb-12">
+      <div class="container" name="filled">
+        <div class="row">
+          <div class="col-12 text-center">
+            <!-- Heading -->
+            <h3 class="pb-8">Nossa história</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 px-md-15">
+            O Empório Villa Borghese não é apenas um supermercado selecionado. É o resultado de muitos anos de trabalho de uma família que investiu em sonhos e oportunidades.
+            <br><br>
+            O conceito deste ícone de qualidade, bom gosto e ótimo atendimento na cidade, nasceu 3 anos antes de sua inauguração. Pois em outubro de 1993, a família Diniz Fernandes estabeleceu, na Ponta da Praia, o Mercado Carolina. E a ideia do novo negócio era, principalmente, criar um espaço diferenciado, onde os clientes pudessem comprar itens mais exclusivos, como uma boa garrafa de vinho, um queijo especial ou até mesmo uma geleia importada.
+            <br><br>
+            Trabalhou-se muito, aprendeu-se ainda mais. E a abertura econômica do Brasil para produtos importados havia chegado para ficar. Com a junção destes fatores e diante do posicionamento inovador da loja para a região de Santos, o sucesso obtido foi grande. A partir deste cenário, entendeu-se então o rumo por onde caminhariam os próximos investimentos. Assim, no dia 14 de dezembro de 1996, foi inaugurada a primeira unidade do Villa Borghese, na rua Mato Grosso. Uma loja de quase 400 metros quadrados, com cerca de 50 funcionários.
+            <br><br>
+            Já em 2001, depois de 4 anos de funcionamento, o Mercado Villa Borghese foi reformado. Mais que isso, passou por um processo de consolidação da sua identidade de marca. Como resultado, foram reformulados não apenas estrutura e fachada, mas também um novo logotipo e nome: ao invés de “Mercado”, agora seria Empório Villa Borghese.
+            <br><br>
+            Com a força de novos parceiros comerciais, dedicação de funcionários queridos e da implementação da adega e setor de hortifrúti, os negócios foram prosperando e evoluindo. Tanto que, com a mudança dos hábitos de consumo dos brasileiros, especialmente no que diz respeito ao vinho, o Villa Borghese passou a representar com exclusividade, em todo litoral paulista e Campos de Jordão, os vinhos da conceituada Importadora Decanter. Com a inauguração da Enoteca Decanter, em 30 de outubro de 2007, abriu-se em Santos um lugar único, conciliando bistrô e uma loja de vinhos com mais de mil rótulos exclusivos.
+            <br><br>
+            Diante de uma experiência tão rica e desafiadora, veio à tona o projeto de abrir uma nova loja. Desta vez, na rua Azevedo Sodré, bem no coração de Santos. Um lugar democrático, com localização de fácil acesso, perto da praia e dos centros comerciais mais famosos. Finalmente, em maio de 2011, foi aberta a segunda loja do Empório Villa Borghese na cidade.
+            <br><br>
+            Nos dias de hoje, centenas de consumidores passaram a contar, cada vez mais, com a simpatia, alta qualidade e variedade do Empório Villa Borghese. E eles também vêm de outras cidades da Baixada Santista! Afinal de contas, fazer compras em um lugar planejado para oferecer o melhor ao cliente, com muito conforto, facilidade e preços justos, só poderia mesmo render uma ótima aceitação. Este é o Villa Borghese, um supermercado surpreendente todos os dias.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <%- include ("./components/footer") %>
+
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- End Go to Top -->
+  <%- include ("./components/scripts") %>
+</body>
+</html>

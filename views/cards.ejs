@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese - Cartões</title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .card-img {
+                position: relative;
+                padding-top: 100%;
+                left: 0;
+                top: 0;
+            }
+            .card-img img {
+                margin-left: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+            .product-image img {
+                max-height: 270px;
+                object-fit: contain;
+            }
+            @media only screen and (min-width: 1200px) {
+                .col-lg-24 {
+                    flex: 0 0 20%;
+                    max-width: 20%;
+                }
+            }
+        </style>
+    </head>
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+        <div class="toolbar">
+            <button onclick="window.location.href = '/';"><i class="far fa-store"></i><span>Inicio</span></button>
+            <button onclick="window.location.href = '/categories';"><i class="far fa-bars"></i><span>Categorias</span></button>
+            <button onclick="viewCart();"><i class="far fa-shopping-cart"></i><span>Carrinho</span></button>
+            <button class="active" onclick="viewAccount();"><i class="far fa-user"></i><span>Conta</span></button>
+        </div>
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- BREADCRUMB -->
+            <nav class="py-5 hide-mobile">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Breadcrumb -->
+                            <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                                <li class="breadcrumb-item">
+                                    <a class="text-gray-400" href="/">Início</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a class="text-gray-400" href="/cards">Cartões</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- CONTENT -->
+            <section class="pt-7 pb-12">
+                <div class="container">
+                    <div class="row hide-mobile">
+                        <div class="col-12 text-center">
+                            <!-- Heading -->
+                            <h3 class="mb-10">Meus cartões</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3 d-none d-md-block">
+                            <!-- Nav -->
+                            <nav class="mb-10 mb-md-0">
+                                <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/orders"> Pedidos </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/profile"> Perfil </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/addresses"> Endereços </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle active" href="/cards"> Cartões </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/logout"> Sair </a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+                            <div class="row">
+                                <% for(var i=0; i < cards.length; i++) { %>
+                                <div class="col-12 col-lg-6">
+                                    <div class="card card-lg bg-light mb-8">
+                                        <div class="card-body">
+                                            <p class="mb-5">
+                                                <strong>Número do cartão:</strong> <br />
+                                                <span class="text-muted"><img src="<%= cards[i].issuer %>.svg" style="height: 18px" /> <%= cards[i].last_4 %></span>
+                                            </p>
+                                            <p class="mb-5">
+                                                <strong>Validade:</strong> <br />
+                                                <span class="text-muted"><%= cards[i].expiration %></span>
+                                            </p>
+                                            <p class="mb-0">
+                                                <strong>Nome:</strong> <br />
+                                                <span class="text-muted"><%= cards[i].name %></span>
+                                            </p>
+                                            <div class="card-action card-action-right">
+                                                <button class="btn btn-xs btn-circle btn-white-primary" onclick="deleteCard('<%= cards[i].id %>');"><i class="fe fe-x"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="col-12">
+                                    <a class="btn btn-block btn-lg btn-outline-border" href="/cards/new"> Novo cartão <i class="fe fe-plus"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            async function deleteCard(id) {
+                $("#loading").modal("show");
+                try {
+                    await makeRequest({
+                        method: "DELETE",
+                        path: `/cards/${id}`
+                    });
+                    window.location.href = "/cards";
+                } catch (error) {
+                    window.location.href = "/cards";
+                }
+                $("#loading").modal("hide");
+            }
+        </script>
+    </body>
+</html>

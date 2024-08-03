@@ -1,0 +1,83 @@
+<div class="py-2 bg-dark hide-mobile promo-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center text-white">
+                    <% if(typeof promo != 'undefined'){ %>
+                    <a class="heading-xxs letter-spacing-xl" href="<%= promo.link %>" target="_blank"> <%= promo.text %> </a>
+                    <% } else { %> Emporio Villa Borghese <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-md navbar-light @@classList border-bottom p-3">
+    <div class="container position-relative">
+        <!-- Brand -->
+        <a class="navbar-brand" href="/">
+            <img src="logo.png" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="modal" data-target="#sideMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="mx-auto input-group input-group-merge" style="width: 100%; max-width: 500px">
+            <% if(typeof categories != 'undefined'){ %>
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-border dropdown-toggle" type="button" id="dropdownMenuButtonTwo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departamentos</button>
+                <!-- Menu -->
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonTwo">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-styled mb-0">
+                                <% for(var i=0; i < categories.length; i++) { %>
+                                <li class="list-styled-item">
+                                    <a class="list-styled-link" href="/search?category=<%= categories[i].id %>&sort=subcategory"> <%= categories[i].name %> </a>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <input class="form-control" type="text" placeholder="Procurar produtos" />
+            <div class="input-group-append">
+                <button class="btn btn-outline-border" type="submit" onclick="window.location.href = '/search?search='+ encodeURI($('.navbar input[type=text]').val()) + '&sort=name';">
+                    <i class="fe fe-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Nav -->
+        <ul class="navbar-nav flex-row ml-0 ml-lg-10 d-none d-md-flex">
+            <li class="nav-item d-none">
+                <a class="nav-link" data-toggle="modal" href="#modalSearch">
+                    <i class="fe fe-search"></i>
+                </a>
+            </li>
+            <li class="nav-item ml-lg-n4">
+                <a class="nav-link" href="javascript:;" onclick="viewOrders();">
+                    <i class="fe fe-user"></i>
+                </a>
+            </li>
+            <li class="nav-item ml-lg-n4">
+                <a class="nav-link" href="javascript:;" onclick="viewWishlist();">
+                    <span id="wishlistCount">
+                        <i class="fe fe-heart"></i>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item ml-lg-n4">
+                <a class="nav-link" data-toggle="modal" href="javascript:;" onclick="viewCart();">
+                    <span id="cartCount">
+                        <i class="fe fe-shopping-cart"></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

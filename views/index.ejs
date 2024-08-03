@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese</title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .categories .image {
+                width: 100%;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .categories .image {
+                width: 100%;
+                padding-top: 100%;
+                position: relative;
+            }
+            .categories .image img {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+            }
+
+            .slider {
+                position: relative;
+            }
+
+            .slider button {
+                position: absolute;
+                top: calc(50% - 20px);
+                border: none;
+                background: transparent;
+                z-index: 1;
+                width: 40px;
+                height: 40px;
+                background: #ff6f61;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 5px;
+            }
+
+            .slider button.next {
+                position: absolute;
+                right: 0;
+            }
+
+            .slider button i {
+                font-size: 30px;
+                color: white;
+            }
+
+            .slider .slide {
+                padding-top: 35%;
+                position: relative;
+                display: none;
+            }
+
+            .slider .slide img.mobile {
+                display: none;
+            }
+            .slider .slide img.desktop {
+                display: block;
+            }
+
+            @media (max-width: 768px) {
+                .slider .slide {
+                    padding-top: 50%;
+                }
+                .slider .slide img {
+                    object-position: center;
+                }
+                .slider .slide img.mobile {
+                    display: block;
+                }
+                .slider .slide img.desktop {
+                    display: none;
+                }
+            }
+
+            .slider .slide.active {
+                display: block;
+            }
+
+            .slider .slide img {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- START: slider -->
+            <section style="max-width: 1300px; margin: auto">
+                <div class="slider">
+                    <button onclick="previouseSlide();" class="previous"><i class="far fa-angle-left"></i></button>
+                    <% for(var i=0; i < banners.length; i++) { if (i === 0) { %>
+                    <a href="<%= banners[i].link %>" class="slide active">
+                        <img src="<%= banners[i].image %>" />
+                    </a>
+                    <% } else { %>
+                    <a href="<%= banners[i].link %>" class="slide">
+                        <img src="<%= banners[i].image %>" />
+                    </a>
+                    <% }} %>
+                    <button onclick="nextSlide();" class="next"><i class="far fa-angle-right"></i></button>
+                </div>
+            </section>
+            <!-- END: slider -->
+            <!-- START: categories -->
+            <section class="pt-10 pb-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-10 text-center">Departamentos</h2>
+                            <div class="row px-0 px-lg-12 categories" style="display: flex; justify-content: center">
+                                <% for(var i=0; i < categories.length; i++) { %>
+                                <div style="width: 100px; padding: 0 15px">
+                                    <div class="card d-flex justify-content-center align-items-center">
+                                        <!-- Image -->
+                                        <div class="image"><img src="<%= categories[i].image %>" /></div>
+                                        <!-- Body -->
+                                        <div class="card-body py-0 px-0 text-center">
+                                            <!-- Heading -->
+                                            <a class="stretched-link nav-link px-0" href="/search?category=<%= categories[i].id %>&sort=subcategory" style="font-size: 14px; line-height: 15px">
+                                                <%= categories[i].name %>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END: categories -->
+            <!-- START: featured -->
+            <section class="pt-7 mb-10 pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+                            <h2 class="mb-7 text-center">Seleção do Villa</h2>
+                            <div class="nav justify-content-center mb-10">
+                                <a class="nav-link active" href="#novidadesTab" data-toggle="tab">Novidades</a>
+                                <a class="nav-link" href="#importadosTab" data-toggle="tab">Importados</a>
+                                <a class="nav-link" href="#vinhosTab" data-toggle="tab">Vinhos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="novidadesTab">
+                            <div class="row">
+                                <% for(var i=0; i < featured.length; i++) { %>
+                                <div class="col-6 col-md-3 col-lg-24 col-xl-2">
+                                    <a class="card" href="items/<%= featured[i].id %>">
+                                        <% if (featured[i].discount) { %>
+                                        <div class="badge badge-primary card-badge card-badge-left text-uppercase">OFERTA</div>
+                                        <% } %>
+                                        <div class="card-img">
+                                            <img src="<%= featured[i].image %>" alt="<%= featured[i].name %>" />
+                                        </div>
+                                        <div class="card-body px-0">
+                                            <div class="font-size-xs">
+                                                <div class="text-muted"><%= featured[i].subcategory.name %></div>
+                                            </div>
+                                            <div class="font-weight-bold">
+                                                <a class="text-body" href="items/<%= featured[i].image %>"><%= featured[i].name %></a>
+                                            </div>
+                                            <div class="font-weight-bold text-muted">
+                                                <% if (featured[i].discount) { %>
+                                                <span class="font-size-xs text-gray-350 text-decoration-line-through mr-1">R$ <%= Utils.formatCurrency(featured[i].price) %></span>
+                                                <span class="text-primary">R$ <%= Utils.formatCurrency(featured[i].price - featured[i].discount) %></span>
+                                                <% } else { %>
+                                                <span class="font-weight-bold text-muted">R$ <%= Utils.formatCurrency(featured[i].price) %> </span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center pt-5">
+                                <a class="link active" href="search?featured=true&sort=subcategory">Ver mais</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="importadosTab">
+                            <div class="row">
+                                <% for(var i=0; i < imported.length; i++) { %>
+                                <div class="col-6 col-md-3 col-lg-24 col-xl-2">
+                                    <a class="card" href="items/<%= imported[i].id %>">
+                                        <div class="card-img">
+                                            <img src="<%= imported[i].image %>" alt="<%= imported[i].name %>" />
+                                        </div>
+                                        <div class="card-body px-0">
+                                            <div class="font-size-xs">
+                                                <div class="text-muted"><%= imported[i].subcategory.name %></div>
+                                            </div>
+                                            <div class="font-weight-bold">
+                                                <a class="text-body" href="items/<%= imported[i].image %>"><%= imported[i].name %></a>
+                                            </div>
+                                            <div class="font-weight-bold text-muted">
+                                                <% if (imported[i].discount) { %>
+                                                <span class="font-size-xs text-gray-350 text-decoration-line-through mr-1">R$ <%= Utils.formatCurrency(imported[i].price) %></span>
+                                                <span class="text-primary">R$ <%= Utils.formatCurrency(imported[i].price - imported[i].discount) %></span>
+                                                <% } else { %>
+                                                <span class="font-weight-bold text-muted">R$ <%= Utils.formatCurrency(imported[i].price) %> </span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center pt-5">
+                                <a class="link active" href="search?category=AIEm83FWG8&sort=demand">Ver mais</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="vinhosTab">
+                            <div class="row">
+                                <% for(var i=0; i < wines.length; i++) { %>
+                                <div class="col-6 col-md-3 col-lg-24 col-xl-2">
+                                    <a class="card" href="items/<%= wines[i].id %>">
+                                        <div class="card-img">
+                                            <img src="<%= wines[i].image %>" alt="<%= wines[i].name %>" />
+                                        </div>
+                                        <div class="card-body px-0">
+                                            <div class="font-size-xs">
+                                                <div class="text-muted"><%= wines[i].subcategory.name %></div>
+                                            </div>
+                                            <div class="font-weight-bold">
+                                                <a class="text-body" href="items/<%= wines[i].image %>"><%= wines[i].name %></a>
+                                            </div>
+                                            <div class="font-weight-bold text-muted">
+                                                <% if (wines[i].discount) { %>
+                                                <span class="font-size-xs text-gray-350 text-decoration-line-through mr-1">R$ <%= Utils.formatCurrency(wines[i].price) %></span>
+                                                <span class="text-primary">R$ <%= Utils.formatCurrency(wines[i].price - wines[i].discount) %></span>
+                                                <% } else { %>
+                                                <span class="font-weight-bold text-muted">R$ <%= Utils.formatCurrency(wines[i].price) %> </span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center pt-5">
+                                <a class="link active" href="search?category=C519ajCdPI&sort=demand">Ver mais</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END: featured -->
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+        <div class="toolbar">
+            <button class="active" onclick="window.location.href = '/';"><i class="far fa-store"></i><span>Inicio</span></button>
+            <button onclick="window.location.href = '/categories';"><i class="far fa-bars"></i><span>Categorías</span></button>
+            <button onclick="viewCart();"><i class="far fa-shopping-cart"></i><span>Carrinho</span></button>
+            <button onclick="viewAccount();"><i class="far fa-user"></i><span>Conta</span></button>
+        </div>
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+        <!-- End Go to Top -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            $(".mobile-navbar .left").html("");
+            setInterval(function () {
+                nextSlide();
+            }, 5000 * 2);
+
+            function nextSlide() {
+                $(".slider .slide").each(function (index) {
+                    if ($(this).hasClass("active")) {
+                        $(this).removeClass("active");
+                        if ($(".slider .slide")[index + 1]) {
+                            $($(".slider .slide")[index + 1]).addClass("active");
+                        } else {
+                            $($(".slider .slide")[0]).addClass("active");
+                        }
+                        return false;
+                    }
+                });
+            }
+
+            function previouseSlide() {
+                $(".slider .slide").each(function (index) {
+                    if ($(this).hasClass("active")) {
+                        $(this).removeClass("active");
+                        if ($(".slider .slide")[index - 1]) {
+                            $($(".slider .slide")[index - 1]).addClass("active");
+                        } else {
+                            $($(".slider .slide")[$(".slider .slide").length - 1]).addClass("active");
+                        }
+                        return false;
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

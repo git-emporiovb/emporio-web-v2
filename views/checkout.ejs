@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese - Finalizar a compra</title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .card-img {
+                position: relative;
+                padding-top: 100%;
+                left: 0;
+                top: 0;
+            }
+            .card-img img {
+                margin-left: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+            .btn-group-toggle input {
+                opacity: 0 !important;
+            }
+        </style>
+    </head>
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- BREADCRUMB -->
+            <nav class="py-5 d-none">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Breadcrumb -->
+                            <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                                <li class="breadcrumb-item">
+                                    <a class="text-gray-400" href="/">Início</a>
+                                </li>
+                                <li class="breadcrumb-item active">Finalizar a compra</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- CONTENT -->
+            <section class="pb-12 pt-8 pt-md-10">
+                <div class="container" name="filled">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <!-- Heading -->
+                            <h3 class="pb-8 hide-mobile">Finalizar a compra</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-7 m-auto">
+                            <h6 class="mb-7">Produtos</h6>
+
+                            <ul class="list-group list-group-lg list-group-flush-y list-group-flush-x mb-7" name="items"></ul>
+
+                            <!-- Heading -->
+                            <h6 class="mb-7 d-flex justify-content-between align-items-center">Endereço de entrega</h6>
+                            <!-- Accordion -->
+                            <div class="list-group list-group-sm mb-7" id="addressAccordion">
+                                <% for(var i=0; i < addresses.length; i++) { %>
+                                <div class="list-group-item" id="addressHeading0">
+                                    <!-- Radio -->
+                                    <div class="custom-control custom-radio">
+                                        <input
+                                            class="custom-control-input"
+                                            id="address_<%= addresses[i].id %>_option"
+                                            value="<%= addresses[i].id %>"
+                                            zip="<%= addresses[i].zip %>"
+                                            name="address"
+                                            type="radio"
+                                        />
+                                        <label
+                                            class="custom-control-label font-size-sm text-body text-nowrap d-flex justify-content-between"
+                                            for="address_<%= addresses[i].id %>_option"
+                                            onclick="$('#address_<%= addresses[i].id %>_option').click();viewCart();"
+                                            href="javascript:;"
+                                            role="button"
+                                            data-toggle="collapse"
+                                            data-target="#addressCollapse0"
+                                            aria-expanded="false"
+                                            aria-controls="addressCollapse0"
+                                        >
+                                            <span><%= addresses[i].street %> <%= addresses[i].number %></span> <span class="text-muted"><%= addresses[i].neighbourhood %></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="list-group-item" id="paymentHeading0">
+                                    <div class="custom-control custom-radio d-flex justify-content-center align-items-center">
+                                        <a style="font-size: 15px" href="/addresses/new">Adicionar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Accordion -->
+
+                            <!-- End Accordion -->
+                            <h6 class="mb-7">Horario de entrega</h6>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="btn-group-toggle" data-toggle="buttons">
+                                            <div class="row" id="shipping_blocks"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Heading -->
+                            <h6 class="mb-7 d-flex justify-content-between align-items-center">Forma de pagamento</h6>
+                            <div class="list-group list-group-sm mb-7" id="paymentAccordion">
+                                <% for(var i=0; i < cards.length; i++) { %>
+                                <div class="list-group-item" id="paymentHeading0">
+                                    <div class="custom-control custom-radio">
+                                        <input class="custom-control-input" id="payment_<%= cards[i].id %>_option" value="<%= cards[i].id %>" name="payment" type="radio" />
+                                        <label
+                                            class="custom-control-label font-size-sm text-body text-nowrap d-flex justify-content-between"
+                                            for="payment_<%= cards[i].id %>_option"
+                                            onclick="viewCart();$('#payment_<%= cards[i].id %>_option').click();"
+                                            href="javascript:;"
+                                            role="button"
+                                            data-toggle="collapse"
+                                            data-target="#paymentCollapse0"
+                                            aria-expanded="false"
+                                            aria-controls="paymentCollapse0"
+                                        >
+                                            <span><img class="mr-1" src="<%= cards[i].issuer %>.svg" style="height: 18px" /> <%= cards[i].last_4 %></span> <span class="text-muted">Crédito</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <% } %> <% if (user.member) { %>
+                                <div class="list-group-item" id="paymentHeading0">
+                                    <div class="custom-control custom-radio">
+                                        <input class="custom-control-input" id="payment_member_option" value="member" name="payment" type="radio" />
+                                        <label
+                                            class="custom-control-label font-size-sm text-body text-nowrap d-flex justify-content-between"
+                                            for="payment_member_option"
+                                            onclick="viewCart();$('#payment_member_option').click();"
+                                            href="javascript:;"
+                                            role="button"
+                                            data-toggle="collapse"
+                                            data-target="#paymentCollapse0"
+                                            aria-expanded="false"
+                                            aria-controls="paymentCollapse0"
+                                        >
+                                            <span><img class="mr-1" src="logo.png" style="height: 18px" /> Cartão Villa</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="list-group-item" id="paymentHeading0">
+                                    <div class="custom-control custom-radio d-flex justify-content-center align-items-center">
+                                        <a style="font-size: 15px" href="/cards/new">Adicionar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-7">Faturamento</h6>
+                            <div class="row">
+                                <div class="col-12 col-sm-4">
+                                    <div class="form-group">
+                                        <label>Nota paulista</label>
+                                        <div class="btn-group-toggle d-flex" data-toggle="buttons">
+                                            <label class="btn btn-sm btn-outline-border w-100 mr-1"> <input type="radio" name="ticket" onchange="renderVat();" value="yes" /> Sim </label>
+                                            <label class="btn btn-sm btn-outline-border active w-100 ml-1">
+                                                <input type="radio" name="ticket" onchange="renderVat();" value="no" checked="" /> Nao
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-8">
+                                    <div class="form-group">
+                                        <label for="checkoutBillingVat">CPF/CNPJ</label>
+                                        <input class="form-control form-control-sm" id="checkoutBillingVat" type="text" name="vat" placeholder="CPF ou CNPJ" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-7">Detalhes</h6>
+
+                            <div class="card mb-9 bg-light">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x">
+                                        <li class="list-group-item d-flex"><span>Subtotal</span> <span class="ml-auto font-size-sm" name="subtotal">-</span></li>
+                                        <li class="list-group-item">
+                                            <div class="d-flex"><span>Desconto</span> <span class="ml-auto font-size-sm" name="discount">-</span></div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="d-flex"><span>Envio</span> <span class="ml-auto font-size-sm" name="shipping">-</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex font-size-lg font-weight-bold"><span>Total</span> <span class="ml-auto" name="total">-</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Disclaimer -->
+                            <p class="mb-7 font-size-xs text-gray-500">Ao comprar você concorda com os termos, condições e políticas de privacidade de nosso site.</p>
+
+                            <!-- Button -->
+                            <button class="btn btn-block btn-dark" onclick="placeOrder();">Pagar e finalizar</button>
+                        </div>
+                    </div>
+                </div>
+                <div name="empty" class="w-100">
+                    <div class="container d-flex align-items-center justify-content-center w-100" style="max-width: 350px; min-height: 50vh">
+                        <!-- Body -->
+                        <div class="modal-body flex-grow-0 my-auto">
+                            <!-- Heading -->
+                            <h6 class="mb-7 text-center">Seu carrinho está vazio 😞</h6>
+                            <!-- Button -->
+                            <a class="btn btn-block btn-outline-dark" href="/search"> Continue comprando </a>
+                        </div>
+                    </div>
+                </div>
+                <div name="success" class="w-100">
+                    <div class="container d-flex align-items-center justify-content-center w-100" style="max-width: 450px; min-height: 50vh">
+                        <!-- Body -->
+                        <div class="modal-body flex-grow-0 my-auto">
+                            <!-- Heading -->
+                            <h4 class="mb-7 text-center">Pedido recebido 😍</h4>
+                            <p class="text-muted text-center" id="success_description"></p>
+                            <a class="btn btn-block btn-outline-dark" href="/orders" style="max-width: 300px; margin: auto"> Ver pedido </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+        <div class="modal" tabindex="-1" role="dialog" id="out_of_stock">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Body -->
+                        <div class="modal-body flex-grow-0 my-auto">
+                            <!-- Heading -->
+                            <h6 class="mb-7 text-center">Sem estoque 😞</h6>
+                            <p class="pb-3">
+                                Infelizmente, algum produto de seu carrinho se encontra fora de estoque. Confira e tente novamente. Se precisar de ajuda envie-nos uma mensagem no Whatsapp
+                                <a href="https://api.whatsapp.com/send?phone=551321047575" target="_blank">+55 13 2104 7575</a>.
+                            </p>
+                            <!-- Button -->
+                            <a class="btn btn-block btn-outline-dark" href="/checkout"> Tentar de novo </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" tabindex="-1" role="dialog" id="payment_failed">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Body -->
+                        <div class="modal-body flex-grow-0 my-auto">
+                            <!-- Heading -->
+                            <h6 class="mb-7 text-center">Falhou o pagamento 😞</h6>
+                            <p class="pb-3">
+                                Infelizmente, seu método de pagamento foi rejeitado. Tente novamente ou entre em contato com seu banco. Se precisar de ajuda envie-nos uma mensagem no Whatsapp
+                                <a href="https://api.whatsapp.com/send?phone=551321047575" target="_blank">+55 13 2104 7575</a>.
+                            </p>
+                            <!-- Button -->
+                            <button class="btn btn-block btn-outline-dark" data-dismiss="modal" aria-label="Close">Tentar de novo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" tabindex="-1" role="dialog" id="error">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Body -->
+                        <div class="modal-body flex-grow-0 my-auto">
+                            <!-- Heading -->
+                            <h6 class="mb-7 text-center">Ops! Algo deu errado 😞</h6>
+                            <p class="pb-3">
+                                Infelizmente, sua compra não foi efetuada. Tente novamente ou envie-nos uma mensagem no Whatsapp
+                                <a href="https://api.whatsapp.com/send?phone=551321047575" target="_blank">+55 13 2104 7575</a>.
+                            </p>
+                            <!-- Button -->
+                            <button class="btn btn-block btn-outline-dark" data-dismiss="modal" aria-label="Close">Tentar de novo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" tabindex="-1" role="dialog" id="missingModal">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Body -->
+                        <div class="modal-body flex-grow-0 my-auto">
+                            <!-- Heading -->
+                            <h6 class="mb-7 text-center">Ops! 🧐</h6>
+                            <p class="pb-3">
+                                <span>Você precisa preencher todos os campos do formulário.</span> Verifique e tente novamente. Se precisar de ajuda envie-nos uma mensagem no Whatsapp
+                                <a href="https://api.whatsapp.com/send?phone=551321047575" target="_blank">+55 13 2104 7575</a>.
+                            </p>
+                            <!-- Button -->
+                            <button class="btn btn-block btn-outline-dark" data-dismiss="modal" aria-label="Close">Tentar de novo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Go to Top -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            renderVat();
+            function renderVat() {
+                if ($("input[name=ticket]:checked").val() === "yes") {
+                    $($("#checkoutBillingVat").parents(".col-12")[0]).show();
+                } else {
+                    $($("#checkoutBillingVat").parents(".col-12")[0]).hide();
+                }
+            }
+            showLoading("#checkoutCart");
+            $('[name="success"]').hide();
+            var CpfCnpjMaskBehavior = function (val) {
+                    return val.replace(/\D/g, "").length <= 11 ? "000.000.000-009" : "00.000.000/0000-00";
+                },
+                cpfCnpjpOptions = {
+                    onKeyPress: function (val, e, field, options) {
+                        field.mask(CpfCnpjMaskBehavior.apply({}, arguments), options);
+                    }
+                };
+
+            $(function () {
+                $("#checkoutBillingVat").mask(CpfCnpjMaskBehavior, cpfCnpjpOptions);
+            });
+            $("#addressAccordion input").first().click();
+            $("#paymentAccordion input").first().click();
+            viewCart();
+            async function placeOrder() {
+                var valid = true;
+                var address;
+                var card;
+                if ($("input[name=address]:checked").val()) {
+                    address = {
+                        id: $("input[name=address]:checked").val()
+                    };
+                } else if (!$("input[name=address]:checked").val()) {
+                    valid = false;
+                    console.log("No address selected");
+                    $("#missingModal p span").html("Você não escolheu um endereco para receber seu pedido.");
+                }
+                if ($("input[name=payment]:checked").val()) {
+                    if ($("input[name=payment]:checked").val() !== "member") {
+                        card = {
+                            id: $("input[name=payment]:checked").val()
+                        };
+                    }
+                } else if (!$("input[name=payment]:checked").val()) {
+                    valid = false;
+                    console.log("No card selected");
+                    $("#missingModal p span").html("Voce nao escolheu um cartao para pagar seu pedido.");
+                }
+                if (!$("input[name=time]:checked").val()) {
+                    valid = false;
+                    console.log("No time selected");
+                    $("#missingModal p span").html("Você não escolheu uma forma de pagamento.");
+                }
+                var vat;
+                if ($("input[name=ticket]:checked").val() === "yes") {
+                    if (!$("#checkoutBillingVat").val() || ($("#checkoutBillingVat").val().length !== 14 && $("#checkoutBillingVat").val().length !== 18)) {
+                        valid = false;
+                        $("#checkoutBillingVat").addClass("is-invalid");
+                        console.log("Invalid VAT");
+                        $("#missingModal p span").html("O CPF ingresado e invalido.");
+                    } else {
+                        vat = $("#checkoutBillingVat").val().replace(/\D/g, "");
+                    }
+                }
+                if (!$("input[name=time]:checked").val()) {
+                    valid = false;
+                    $("#missingModal p span").html("Você não escolheu um horario de entrega.");
+                }
+                if (valid) {
+                    $("#loading").modal("show");
+                    try {
+                        var order = await makeRequest({
+                            method: "POST",
+                            path: `/orders`,
+                            data: {
+                                token: Math.random()
+                                    .toString(36)
+                                    .replace(/[^a-z]+/g, "")
+                                    .substr(0, 10),
+                                due_date: $("input[name=time]:checked").val(),
+                                address,
+                                card,
+                                vat,
+                                source: "web"
+                            }
+                        });
+                        gtag("event", "purchase", {
+                            transaction_id: order.number,
+                            affiliation: "Website",
+                            value: order.total,
+                            currency: "BRL",
+                            shipping: order.shipping,
+                            items: order.items.map((object) => {
+                                return {
+                                    id: object.item.sku,
+                                    name: object.item.name,
+                                    category: object.item.secondary_category,
+                                    quantity: object.quantity,
+                                    price: (object.item.price - object.item.discount).toString()
+                                };
+                            })
+                        });
+                        setTimeout(function () {
+                            window.location.href = `/orders/${order.id}`;
+                        }, 1000);
+                    } catch (error) {
+                        $("#loading").modal("hide");
+                        $("#error").modal("show");
+                    }
+                } else {
+                    $("#missingModal").modal("show");
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,449 @@
+<div class="modal fixed-right fade" id="sideMenu" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-vertical" role="document">
+        <!-- Full cart (add `.d-none` to disable it) -->
+        <div class="modal-content">
+            <div class="flex">
+                <div class="header" style="height: 73px; flex-basis: 73px">
+                    <!-- Close -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fe fe-x" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="body p-5">
+                    <ul class="nav nav-vertical">
+                        <% if(typeof categories != 'undefined'){ %>
+                        <li class="nav-item">
+                            <!-- Toggle -->
+                            <a class="nav-link dropdown-toggle font-size-lg text-reset border-bottom mb-6" data-toggle="collapse" href="#primaryCategoryCollapse"> Departamentos </a>
+                            <!-- Collapse -->
+                            <div class="collapse" id="primaryCategoryCollapse">
+                                <div class="form-group">
+                                    <ul class="list-styled mb-0">
+                                        <% for(var i=0; i < categories.length; i++) { %>
+                                        <li class="list-styled-item">
+                                            <a class="list-styled-link" href="/search?category=<%= categories[i].id %>&sort=demand"> <%= categories[i].name %> </a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <!-- Toggle -->
+                            <a class="nav-link font-size-lg border-bottom mb-6 after-right" onclick="viewOrders();"> Pedidos </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Toggle -->
+                            <a class="nav-link font-size-lg border-bottom mb-6 after-right" onclick="viewProfile();"> Perfil </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Toggle -->
+                            <a class="nav-link font-size-lg border-bottom mb-6 after-right" onclick="viewAddresses();"> Endereços </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Toggle -->
+                            <a class="nav-link font-size-lg border-bottom mb-6 after-right" onclick="viewCards();"> Cartões </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Toggle -->
+                            <a class="nav-link font-size-lg border-bottom mb-6 after-right" onclick="viewWishlist();"> Favoritos </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Toggle -->
+                            <a class="nav-link font-size-lg border-bottom mb-6 after-right" onclick="viewCart();"> Carrinho </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fixed-right fade" id="modalShoppingCart" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-vertical" role="document">
+        <!-- Full cart (add `.d-none` to disable it) -->
+        <div class="modal-content" name="filled">
+            <div class="flex">
+                <div class="header" style="height: 73px; flex-basis: 73px">
+                    <!-- Close -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fe fe-x" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Header-->
+                    <div class="modal-header line-height-fixed font-size-lg">
+                        <strong class="mx-auto">Seu carrinho (<span name="total_items">0</span>)</strong>
+                    </div>
+                </div>
+                <div class="body">
+                    <ul class="list-group list-group-lg list-group-flush" name="items"></ul>
+                </div>
+                <div class="footer" style="height: 260px; flex-basis: 260px">
+                    <!-- Footer -->
+                    <div class="modal-footer line-height-fixed font-size-sm bg-light mt-auto"><strong>Subtotal</strong> <strong class="ml-auto" name="subtotal">$0.00</strong></div>
+
+                    <!-- Buttons -->
+                    <div class="modal-body">
+                        <a class="btn btn-block btn-dark" href="javascript:;" onclick="checkout();">Finalizar a compra</a>
+                        <button class="btn btn-block btn-outline-dark" data-dismiss="modal">Continuar comprando</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty cart (remove `.d-none` to enable it) -->
+        <div class="modal-content" name="empty" style="display: none">
+            <!-- Close -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="fe fe-x" aria-hidden="true"></i>
+            </button>
+
+            <!-- Header-->
+            <div class="modal-header line-height-fixed font-size-lg">
+                <strong class="mx-auto">Seu carrinho (0)</strong>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body flex-grow-0 my-auto">
+                <!-- Heading -->
+                <h6 class="mb-7 text-center">Seu carrinho está vazio 😞</h6>
+
+                <!-- Button -->
+                <button class="btn btn-block btn-outline-dark" data-dismiss="modal">Continuar comprando</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fixed-right fade" id="modalWishlist" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-vertical" role="document">
+        <!-- Full cart (add `.d-none` to disable it) -->
+
+        <div class="modal-content" name="filled">
+            <div class="flex">
+                <div class="header" style="height: 73px; flex-basis: 73px">
+                    <!-- Close -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fe fe-x" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Header-->
+                    <div class="modal-header line-height-fixed font-size-lg">
+                        <strong class="mx-auto">Seus favoritos (<span name="total_items">0</span>)</strong>
+                    </div>
+                </div>
+                <div class="body">
+                    <ul class="list-group list-group-lg list-group-flush" name="items"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty cart (remove `.d-none` to enable it) -->
+        <div class="modal-content" name="empty">
+            <!-- Close -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="fe fe-x" aria-hidden="true"></i>
+            </button>
+
+            <!-- Header-->
+            <div class="modal-header line-height-fixed font-size-lg">
+                <strong class="mx-auto">Seus favoritos (0)</strong>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body flex-grow-0 my-auto">
+                <!-- Heading -->
+                <h6 class="mb-7 text-center">Sua lista está vazia 😞</h6>
+
+                <!-- Button -->
+                <button class="btn btn-block btn-outline-dark" data-dismiss="modal">Continuar comprando</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-8 p-md-10">
+            <div class="nav justify-content-center d-none">
+                <a class="nav-link active" href="#phoneTab" data-toggle="tab">1</a>
+                <a class="nav-link" href="#codeTab" data-toggle="tab">2</a>
+                <a class="nav-link" href="#registerTab" data-toggle="tab">3</a>
+                <a class="nav-link" href="#welcomeTab" data-toggle="tab">4</a>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="phoneTab">
+                    <!-- Heading -->
+                    <h4>Bem vindo</h4>
+                    <!-- Text -->
+                    <p class="mb-7 font-size-lg">Digite seu celular para continuar</p>
+                    <!-- Form -->
+                    <div class="form-row">
+                        <div class="col">
+                            <!-- Input -->
+                            <div class="form-group mb-0">
+                                <input class="form-control form-control-sm" id="register_phone" type="text" placeholder="Telefone com DD" />
+                                <div class="invalid-feedback">Digite um celular válido</div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <!-- Button -->
+                            <button class="btn btn-sm btn-dark" onclick="sendVerificationCode();">
+                                <i class="fe fe-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show" id="codeTab">
+                    <!-- Heading -->
+                    <h4>Verificacão</h4>
+                    <!-- Text -->
+                    <p class="mb-7 font-size-lg">Digite o código que enviamos</p>
+                    <!-- Form -->
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <!-- Input -->
+                            <div class="form-group mb-0">
+                                <input class="form-control form-control-sm" id="register_code" type="text" placeholder="Código de 4 digitos" />
+                                <div class="invalid-feedback">O código digitado e inválido</div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <!-- Button -->
+                            <button class="btn btn-sm btn-dark" onclick="verifyPhone();">
+                                <i class="fe fe-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <a class="btn-link" href="javascript:;" onclick="$('a[href=\'#phoneTab\']').tab('show');">Não recebí o código</a>
+                </div>
+                <div class="tab-pane fade show" id="registerTab">
+                    <!-- Heading -->
+                    <h4 class="mb-7">Crie sua conta</h4>
+                    <!-- Form -->
+                    <div class="form-group">
+                        <label class="sr-only" for="register_name"> Nome completo </label>
+                        <input class="form-control form-control-sm" id="register_name" type="text" placeholder="Teu nome" required="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="register_vat"> CPF/CNPJ </label>
+                        <input class="form-control form-control-sm" id="register_vat" type="text" placeholder="CPF ou CNPJ" required="" />
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="register_terms" type="checkbox" />
+                            <label class="custom-control-label" for="register_terms"> Aceito os termos e condicoes </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-dark btn-block" onclick="register();">Criar conta</button>
+                </div>
+                <div class="tab-pane fade show" id="welcomeTab">
+                    <!-- Heading -->
+                    <h4></h4>
+                    <!-- Text -->
+                    <p class="font-size-lg">Seja bem vindo</p>
+                </div>
+            </div>
+
+            <!-- Close -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="fe fe-x" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="loading" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Body -->
+                <div class="modal-body flex-grow-0 my-auto">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="error">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Body -->
+                <div class="modal-body flex-grow-0 my-auto">
+                    <!-- Heading -->
+                    <h6 class="mb-7 text-center">Ops! Algo deu errado 😞</h6>
+                    <p class="pb-3">Tente novamente ou envie-nos uma mensagem no Whatsapp <a href="https://api.whatsapp.com/send?phone=5513996091052" target="_blank">+55 13 99609 1052</a>.</p>
+                    <!-- Button -->
+                    <button class="btn btn-block btn-outline-dark" data-dismiss="modal" aria-label="Close">Tentar de novo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./shopper/libs/jquery/dist/jquery.min.js"></script>
+<script src="./shopper/libs/jquery/jquery.mask.min.js"></script>
+<script src="./shopper/libs/@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>
+<script src="./shopper/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<script src="./shopper/libs/highlightjs/highlight.pack.min.js"></script>
+<script src="./shopper/libs/jarallax/dist/jarallax.min.js"></script>
+<script src="./shopper/libs/cleave/cleave.min.js"></script>
+<script src="./shopper/libs/list.js/dist/list.min.js"></script>
+<script src="./shopper/libs/simplebar/dist/simplebar.min.js"></script>
+<script src="./shopper/libs/smooth-scroll/dist/smooth-scroll.min.js"></script>
+<script src="./shopper/js/theme.min.js"></script>
+<script src="./axios/axios.min.js"></script>
+<script src="./global.js"></script>
+<script src="./redirects.js"></script>
+<script src="./sessions.js"></script>
+<script src="./wishlist.js"></script>
+<script src="./cart.js"></script>
+
+<script type="text/javascript">
+    "use strict";
+
+    document.addEventListener("touchstart", function (e) {
+        var t2 = e.timeStamp;
+        var t1 = e.currentTarget.dataset.lastTouch || t2;
+        var dt = t2 - t1;
+        var fingers = e.touches.length;
+        e.currentTarget.dataset.lastTouch = t2;
+
+        if (!dt || dt > 500 || fingers > 1) return;
+
+        e.preventDefault();
+        e.target.click();
+    });
+
+    document.addEventListener("gesturestart", function (e) {
+        e.preventDefault();
+        // special hack to prevent zoom-to-tabs gesture in safari
+        document.body.style.zoom = 0.99;
+    });
+
+    document.addEventListener("gesturechange", function (e) {
+        e.preventDefault();
+        // special hack to prevent zoom-to-tabs gesture in safari
+        document.body.style.zoom = 0.99;
+    });
+
+    document.addEventListener("gestureend", function (e) {
+        e.preventDefault();
+        // special hack to prevent zoom-to-tabs gesture in safari
+        document.body.style.zoom = 0.99;
+    });
+
+    $('[data-toggle="collapse"]').click(function (e) {
+        var target = $(this).attr("data-target");
+        console.log(target);
+        if (!$(this).parents(".navbar").length && $(target).hasClass("show")) {
+            e.preventDefault(); // to stop the page jump to the anchor target.
+            e.stopPropagation();
+        }
+    });
+
+    $("input").each(function () {
+        var input = $(this).on("keyup", function () {
+            $(this).removeClass("is-invalid");
+        });
+    });
+    $("select").each(function () {
+        var input = $(this).on("change", function () {
+            $(this).removeClass("is-invalid");
+        });
+    });
+
+    $(document).on("show.bs.modal", ".modal", function (event) {
+        var zIndex = 1040 + 10 * $(".modal:visible").length;
+        $(this).css("z-index", zIndex);
+        setTimeout(function () {
+            $(".modal-backdrop")
+                .not(".modal-stack")
+                .css("z-index", zIndex - 1)
+                .addClass("modal-stack");
+        }, 0);
+    });
+
+    $(".modal").on("hidden.bs.modal", function (event) {
+        setTimeout(function () {
+            if ($(".modal.show").length) {
+                $("body").addClass("modal-open");
+                console.log("Still a modal open");
+            } else {
+                $("body").removeClass("modal-open");
+                console.log("No modal open");
+            }
+        }, 500);
+    });
+
+    function saveFirebaseToken() {
+        $.ajax({
+            type: "POST",
+            url: "/saveFirebaseToken",
+            data: JSON.stringify({
+                token: firebaseToken
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
+    $("#cartCount").removeAttr("data-cart-items");
+
+    /*var wishlist = [];
+    if (localStorage.wishlist) {
+      wishlist = JSON.parse(localStorage.wishlist);
+      if (wishlist.length > 0) {
+        $('#wishlistCount').attr('data-cart-items',wishlist.length);
+      } else {
+        $('#wishlistCount').removeAttr('data-cart-items');
+      }
+    }*/
+
+    $(document.body).on("keyup", ".navbar input[type=text]", function (event) {
+        if (event.keyCode == 13 && $(".navbar input[type=text]").val()) {
+            window.location.href = `/search?search=${encodeURI($(".navbar input[type=text]").val())}&sort=name`;
+        }
+    });
+
+    /*var search;
+    var searchbox = $('.navbar input[type=search]');
+    searchbox.off('keyup');
+    searchbox.off('keydown');
+    searchbox.on('keyup', function(event) {
+      clearTimeout(search);
+      search = setTimeout(function() {
+        $.ajax({
+          type: "POST",
+          url: '/autocomplete',
+          data: JSON.stringify({
+            search: $(searchbox).val()
+          }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(response) {
+            console.log(response);
+            $('#autocomplete').html(response.results);
+          },
+          error: function(error) {
+            console.error(error);
+          }
+        });
+      }, 100);
+    });
+    searchbox.on('keydown', function() {
+      clearTimeout(search);
+    });
+    searchbox.keyup();*/
+</script>

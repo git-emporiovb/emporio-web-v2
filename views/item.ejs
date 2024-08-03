@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese - <%= item.name %></title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .card-img {
+                position: relative;
+                padding-top: 100%;
+                left: 0;
+                top: 0;
+            }
+            .card-img img {
+                margin-left: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+            .product-image img {
+                max-height: 270px;
+                object-fit: contain;
+            }
+        </style>
+    </head>
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- PRODUCT -->
+            <section>
+                <div class="container mt-10 mb-8 pt-md-10">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <!-- Card -->
+                                    <div class="card">
+                                        <div class="mb-4 product-image">
+                                            <a href="<%= item.image %>" data-fancybox="">
+                                                <img src="<%= item.image %>" alt="<%= item.name %>" class="card-img-top" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 pl-lg-10">
+                                    <!-- Header -->
+                                    <div class="row mb-1">
+                                        <div class="col">
+                                            <!-- Preheading -->
+                                            <p class="text-muted mb-0"><%= item.category.name %></p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Heading -->
+                                    <h3 class="mb-2"><%= item.name %></h3>
+
+                                    <!-- Price -->
+                                    <div class="mb-7" style="height: 34px !important">
+                                        <span class="font-size-lg font-weight-bold text-gray-350 text-decoration-line-through" id="discount">R$ <%= Utils.formatCurrency(item.price) %></span>
+                                        <span class="ml-1 h5 font-weight-bolder text-primary" id="price">R$ <%= Utils.formatCurrency(item.price - item.discount) %></span>
+                                    </div>
+
+                                    <p class="mt-4 text-muted"><%= item.description %></p>
+
+                                    <!-- Form -->
+                                    <div>
+                                        <div class="form-group">
+                                            <div class="form-row mb-7 mt-8">
+                                                <div class="col-12 col-xl-6 d-flex">
+                                                    <select class="custom-select mb-2 w-auto" id="unit">
+                                                        <% if (item.unit === 'UN' || (item.unit === 'KG' && item.weight)) { %>
+                                                        <option value="UN">UN</option>
+                                                        <% } else { %>
+                                                        <option value="KG">KG</option>
+                                                        <% } %>
+                                                    </select>
+                                                    <select class="custom-select mb-2 ml-2 w-100" id="quantity" onchange="setPrice();">
+                                                        <% for(var i=1; i <= 20 && i <= item.stock; i++) { %> <% if (item.unit === 'UN' || (item.unit === 'KG' && item.weight)) { %>
+                                                        <option value="<%= i %>">
+                                                            <%= i %> <% if (item.unit === 'KG' && item.weight) { %> - <% if (i * item.weight > 1) { %> <%= (i * item.weight).toFixed(2) %> kg <% } else
+                                                            { %> <%= Math.ceil(i * item.weight * 1000) %>g <% } %> <% } %>
+                                                        </option>
+                                                        <% } else { %>
+                                                        <option value="<%= i * 0.1 %>">
+                                                            <% if (i * 0.1 > 1) { %> <%= (i * 0.1).toFixed(2) %>kg <% } else { %> <%= Math.ceil(i * 0.1 * 1000) %>g <% } %>
+                                                        </option>
+                                                        <% } %> <% } %>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-xl-6 d-flex align-items-center">
+                                                    <button class="btn btn-dark btn-block mb-2 w-100" onclick="add();">Carrinho <i class="fe fe-shopping-cart ml-2"></i></button>
+                                                    <button class="btn btn-dark btn-block mb-2 ml-2 mt-0" onclick="addWish();" style="width: 70px">
+                                                        <i class="fe fe-heart"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <p class="hide-mobile">
+                                                <span class="text-gray-500">Precisa de ajuda?</span>
+                                                <a class="text-reset text-decoration-underline" href="https://api.whatsapp.com/send?phone=5513996293483" target="_blank">Envie-nos um Whatsapp!</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRODUCTS -->
+            <section class="pt-8 pb-10">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Heading -->
+                            <h4 class="mb-10 text-center">Relacionados</h4>
+
+                            <!-- Items -->
+                            <div class="row">
+                                <% for(var i=0; i < related.length; i++) { %>
+                                <div class="col-6 col-md-3 col-lg-24 col-xl-2">
+                                    <a class="card" href="items/<%= related[i].id %>">
+                                        <% if (related[i].discount) { %>
+                                        <div class="badge badge-primary card-badge card-badge-left text-uppercase">OFERTA</div>
+                                        <% } %>
+                                        <div class="card-img">
+                                            <img src="<%= related[i].image %>" alt="<%= related[i].name %>" />
+                                        </div>
+                                        <div class="card-body px-0">
+                                            <div class="font-size-xs">
+                                                <div class="text-muted"><%= related[i].subcategory.name %></div>
+                                            </div>
+                                            <div class="font-weight-bold">
+                                                <div class="text-body"><%= related[i].name %></div>
+                                            </div>
+                                            <div class="font-weight-bold text-muted">
+                                                <% if (related[i].discount) { %>
+                                                <span class="font-size-xs text-gray-350 text-decoration-line-through mr-1">R$ <%= related[i].price %></span>
+                                                <span class="text-primary">R$ <%= Utils.formatCurrency(related[i].price - related[i].discount) %></span>
+
+                                                <% } else { %>
+                                                <span class="font-weight-bold text-muted">R$ <%= Utils.formatCurrency(related[i].price) %> </span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <span id="item" item="<%= item.id %>" price="<%= item.price %>" unit="<%= item.unit %>" weight="<%= item.weight %>" discount="<%= item.discount %>" sku="<%= item.sku %>"></span>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+        <div class="toolbar">
+            <button onclick="window.location.href = '/';"><i class="far fa-store"></i><span>Inicio</span></button>
+            <button onclick="window.location.href = '/categories';"><i class="far fa-bars"></i><span>Categorias</span></button>
+            <button onclick="viewCart();"><i class="far fa-shopping-cart"></i><span>Carrinho</span></button>
+            <button onclick="viewAccount();"><i class="far fa-user"></i><span>Conta</span></button>
+        </div>
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+
+        <!-- Go to Top -->
+        <a
+            class="js-go-to go-to position-fixed"
+            href="javascript:;"
+            style="visibility: hidden"
+            data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'
+        >
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <!-- End Go to Top -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            $(".mobile-navbar .title").html("#" + $("#item").attr("sku"));
+            function setPrice() {
+                var quantity = Number($("#quantity").val());
+                var price = Number($("#item").attr("price"));
+                var discount = 0;
+                if (Number($("#item").attr("discount"))) {
+                    discount = Number($("#item").attr("discount"));
+                }
+                if ($("#unit").val() === "UN" && $("#item").attr("unit") === "KG") {
+                    $("#price").html("R$ " + formatCurrency((price - discount) * Number($("#item").attr("weight")) * quantity));
+                    $("#discount").html("R$ " + formatCurrency(price * Number($("#item").attr("weight")) * quantity));
+                } else {
+                    $("#price").html("R$ " + formatCurrency((price - discount) * quantity));
+                    $("#discount").html("R$ " + formatCurrency(price * quantity));
+                }
+
+                if (!discount) {
+                    $("#price").removeClass("h5").addClass("h6").removeClass("text-primary").addClass("text-muted");
+                    $("#discount").hide();
+                }
+                console.log("Updating price");
+            }
+            setPrice();
+            function add() {
+                if (!getCookie("token")) {
+                    after_login_action = `addToCart("${$("#item").attr("item")}", "${$("#quantity").val()}", "${$("#unit").val()}");`;
+                    return $("#loginModal").modal("show");
+                }
+                addToCart($("#item").attr("item"), $("#quantity").val(), $("#unit").val());
+            }
+            function addWish() {
+                if (!getCookie("token")) {
+                    after_login_action = `addToWishlist("${$("#item").attr("item")}");`;
+                    return $("#loginModal").modal("show");
+                }
+                addToWishlist("<%= item.id %>", $("#quantity").val());
+            }
+        </script>
+    </body>
+</html>

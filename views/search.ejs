@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese - <%= title %></title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .card-img {
+                position: relative;
+                padding-top: 100%;
+                left: 0;
+                top: 0;
+            }
+
+            .card-img img {
+                margin-left: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+        </style>
+    </head>
+
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- CONTENT -->
+            <section class="pt-11 pb-11">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Header -->
+                            <div class="row align-items-center mb-7 hide-mobile">
+                                <div class="col-12 col-md">
+                                    <!-- Heading -->
+                                    <h3 class="mb-1"><%= title %></h3>
+                                </div>
+                                <div class="col-12 col-md-auto my-4 mt-md-0">
+                                    <div class="btn-group-justified btn-group-expand-lg">
+                                        <div class="btn-group dropdown" style="min-width: 180px !important">
+                                            <% if (typeof subcategories != 'undefined') { %>
+                                            <select class="custom-select" onchange="subcategory();" id="subcategory" value="<%= subcategory %>">
+                                                <option value="">Todos</option>
+                                                <% for(var i=0; i < subcategories.length; i++) { %>
+                                                <option value="<%= subcategories[i].id %>"><%= subcategories[i].name %></option>
+                                                <% } %>
+                                            </select>
+                                            <% } %>
+                                        </div>
+                                        <div class="btn-group dropdown" style="min-width: 180px !important">
+                                            <select class="custom-select" onchange="sort();" id="sort" value="<%= sort %>">
+                                                <option value="name">Todos</option>
+                                                <option value="subcategory">Departamento</option>
+                                                <option value="demand">Mais vendidos</option>
+                                                <option value="discount">Com desconto</option>
+                                                <option value="expensive">Maior preço</option>
+                                                <option value="cheap">Menor preço</option>
+                                            </select>
+                                        </div>
+                                        <!-- Select -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Products -->
+                            <div class="row">
+                                <% for(var i=0; i < results.length; i++) { %>
+                                <div class="col-6 col-md-3 col-lg-24 col-xl-2">
+                                    <a class="card" href="items/<%= results[i].id %>">
+                                        <% if (results[i].discount) { %>
+                                        <div class="badge badge-primary card-badge card-badge-left text-uppercase">OFERTA</div>
+                                        <% } %>
+                                        <div class="card-img">
+                                            <img src="<%= results[i].image %>" alt="<%= results[i].name %>" />
+                                        </div>
+                                        <div class="card-body px-0">
+                                            <div class="font-size-xs">
+                                                <div class="text-muted"><%= results[i].subcategory.name %></div>
+                                            </div>
+                                            <div class="font-weight-bold">
+                                                <div class="text-body"><%= results[i].name %></div>
+                                            </div>
+                                            <div class="font-weight-bold text-muted">
+                                                <% if (results[i].discount) { %>
+                                                <span class="font-size-xs text-gray-350 text-decoration-line-through mr-1">R$ <%= results[i].price %></span>
+                                                <span class="text-primary">R$ <%= Utils.formatCurrency(results[i].price - results[i].discount) %></span>
+
+                                                <% } else { %>
+                                                <span class="font-weight-bold text-muted">R$ <%= Utils.formatCurrency(results[i].price) %> </span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <% } %>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div class="d-flex justify-content-center align-items-center pt-5">
+                                <nav class="d-flex justify-content-center justify-content-md-end pb-0 pb-sm-0">
+                                    <ul class="pagination pagination-sm text-gray-400">
+                                        <% if (pagination.page - 1 > 0) { %>
+                                        <li class="page-item">
+                                            <a class="page-link page-link-arrow" onclick="goToPage(<%= pagination.page - 1 %>)"><i class="fa fa-caret-left"></i></a>
+                                        </li>
+                                        <% } %> <% if (pagination.page - 2 > 0) { %>
+                                        <li class="page-item">
+                                            <a class="page-link" onclick="goToPage(<%= pagination.page - 2 %>)"><%= pagination.page - 2 %></a>
+                                        </li>
+                                        <% } %> <% if (pagination.page - 1 > 0) { %>
+                                        <li class="page-item">
+                                            <a class="page-link" onclick="goToPage(<%= pagination.page - 1 %>)"><%= pagination.page - 1 %></a>
+                                        </li>
+                                        <% } %>
+                                        <li class="page-item active">
+                                            <a class="page-link" onclick="goToPage(<%= pagination.page %>)"> <%= pagination.page %> </a>
+                                        </li>
+                                        <% if (pagination.page + 1 <= pagination.pages) { %>
+                                        <li class="page-item">
+                                            <a class="page-link" onclick="goToPage(<%= pagination.page + 1 %>)"><%= pagination.page + 1 %></a>
+                                        </li>
+                                        <% } %> <% if (pagination.page + 2 <= pagination.pages) { %>
+                                        <li class="page-item">
+                                            <a class="page-link" onclick="goToPage(<%= pagination.page + 2 %>)"><%= pagination.page + 2 %></a>
+                                        </li>
+                                        <% } %> <% if (pagination.page + 1 <= pagination.pages) { %>
+                                        <li class="page-item">
+                                            <a class="page-link page-link-arrow" onclick="goToPage(<%= pagination.page + 1 %>)"><i class="fa fa-caret-right"></i></a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+        <div class="toolbar">
+            <button onclick="window.location.href = '/';"><i class="far fa-store"></i><span>Inicio</span></button>
+            <button onclick="window.location.href = '/categories';"><i class="far fa-bars"></i><span>Categorias</span></button>
+            <button onclick="viewCart();"><i class="far fa-shopping-cart"></i><span>Carrinho</span></button>
+            <button onclick="viewAccount();"><i class="far fa-user"></i><span>Conta</span></button>
+        </div>
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+
+        <!-- Go to Top -->
+        <a
+            class="js-go-to go-to position-fixed"
+            href="javascript:;"
+            style="visibility: hidden"
+            data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'
+        >
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <!-- End Go to Top -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            $(".mobile-navbar .right").html("");
+            $(".mobile-navbar .title").html($("h3").html());
+            $(document.body).on("keyup", ".subnavbar input", function (event) {
+                if (event.keyCode == 13 && $(".subnavbar input").val()) {
+                    srch();
+                }
+            });
+            if (getParameterByName("subcategory")) {
+                $("#subcategory").val(getParameterByName("subcategory"));
+            }
+            function goToPage(page) {
+                var query = "search?";
+                if (getParameterByName("search")) {
+                    console.log(getParameterByName("search"));
+                    query += "&search=" + getParameterByName("search");
+                }
+                if (getParameterByName("featured")) {
+                    query += "&featured=true";
+                }
+                if (getParameterByName("offer")) {
+                    console.log(getParameterByName("offer"));
+                    query += "&offer=" + getParameterByName("offer");
+                }
+                if (getParameterByName("category")) {
+                    console.log(getParameterByName("category"));
+                    query += "&category=" + getParameterByName("category");
+                }
+                if (getParameterByName("subcategory")) {
+                    console.log(getParameterByName("subcategory"));
+                    query += "&subcategory=" + getParameterByName("subcategory");
+                }
+                if (getParameterByName("list")) {
+                    console.log(getParameterByName("list"));
+                    query += "&list=" + getParameterByName("list");
+                }
+                query += "&page=" + page;
+                if (getParameterByName("sort")) {
+                    console.log(getParameterByName("sort"));
+                    query += "&sort=" + getParameterByName("sort");
+                }
+                window.location.href = query;
+            }
+            function subcategory() {
+                $("html, body").animate({ scrollTop: 0 }, 500);
+                var subcategory = $("#subcategory").val();
+                var query = "search?";
+                if (getParameterByName("search")) {
+                    console.log(getParameterByName("search"));
+                    query += "&search=" + getParameterByName("search");
+                }
+                if (getParameterByName("featured")) {
+                    query += "&featured=true";
+                }
+                if (getParameterByName("offer")) {
+                    console.log(getParameterByName("offer"));
+                    query += "&offer=" + getParameterByName("offer");
+                }
+                if (getParameterByName("category")) {
+                    console.log(getParameterByName("category"));
+                    query += "&category=" + getParameterByName("category");
+                }
+                query += "&subcategory=" + subcategory;
+                if (getParameterByName("sort")) {
+                    console.log(getParameterByName("sort"));
+                    query += "&sort=" + getParameterByName("sort");
+                }
+                if (getParameterByName("list")) {
+                    console.log(getParameterByName("list"));
+                    query += "&list=" + getParameterByName("list");
+                }
+                window.location.href = query;
+            }
+            function sort() {
+                $("html, body").animate({ scrollTop: 0 }, 500);
+                var sort = $("#sort").val() || "name";
+                var query = "search?";
+                if (getParameterByName("search")) {
+                    console.log(getParameterByName("search"));
+                    query += "&search=" + getParameterByName("search");
+                }
+                if (getParameterByName("featured")) {
+                    query += "&featured=true";
+                }
+                if (getParameterByName("offer")) {
+                    console.log(getParameterByName("offer"));
+                    query += "&offer=" + getParameterByName("offer");
+                }
+                if (getParameterByName("category")) {
+                    console.log(getParameterByName("category"));
+                    query += "&category=" + getParameterByName("category");
+                }
+                if (getParameterByName("subcategory")) {
+                    console.log(getParameterByName("subcategory"));
+                    query += "&subcategory=" + getParameterByName("subcategory");
+                }
+                if (getParameterByName("list")) {
+                    console.log(getParameterByName("list"));
+                    query += "&list=" + getParameterByName("list");
+                }
+                query += "&sort=" + sort;
+                window.location.href = query;
+            }
+            function getParameterByName(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return "";
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+            if (getParameterByName("sort")) {
+                $("#sort").val(getParameterByName("sort"));
+            } else {
+                $("#sort").val("name");
+            }
+            if (getParameterByName("search")) {
+                $("h3").html('"' + decodeURI(getParameterByName("search")) + '"');
+            }
+        </script>
+    </body>
+</html>

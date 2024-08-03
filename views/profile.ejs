@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese - Perfil</title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .card-img {
+                position: relative;
+                padding-top: 100%;
+                left: 0;
+                top: 0;
+            }
+            .card-img img {
+                margin-left: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+            .product-image img {
+                max-height: 270px;
+                object-fit: contain;
+            }
+            @media only screen and (min-width: 1200px) {
+                .col-lg-24 {
+                    flex: 0 0 20%;
+                    max-width: 20%;
+                }
+            }
+            #day.is-invalid,
+            #month.is-invalid,
+            #year.is-invalid {
+                padding-right: calc(1.5em + 1.75rem) !important;
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23ff6f61' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23ff6f61' stroke='none'/%3e%3c/svg%3e");
+                background-repeat: no-repeat !important;
+                background-position: right calc(0.375em + 0.4375rem) center !important;
+                background-size: calc(0.75em + 0.875rem) calc(0.75em + 0.875rem) !important;
+            }
+        </style>
+    </head>
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- BREADCRUMB -->
+            <nav class="py-5 hide-mobile">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Breadcrumb -->
+                            <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                                <li class="breadcrumb-item">
+                                    <a class="text-gray-400" href="/">Início</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a class="text-gray-400" href="/profile">Perfil</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- CONTENT -->
+            <section class="pt-7 pb-12">
+                <div class="container">
+                    <div class="row hide-mobile">
+                        <div class="col-12 text-center">
+                            <!-- Heading -->
+                            <h3 class="mb-10">Meu perfil</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3 d-none d-md-block">
+                            <!-- Nav -->
+                            <nav class="mb-10 mb-md-0">
+                                <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/orders"> Pedidos </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle active" href="/profile"> Perfil </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/addresses"> Endereços </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/cards"> Cartões </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/logout"> Sair </a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+                            <!-- Form -->
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <label for="name"> Nome </label>
+                                        <input class="form-control form-control-sm" id="name" type="text" placeholder="Nome completo" required value="<%= user.name %>" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <label for="vat"> CPF/CNPJ </label>
+                                        <input class="form-control form-control-sm" id="vat" type="text" placeholder="CPF ou CNPJ" required value="<%= user.vat %>" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <label for="email"> Email </label>
+                                        <input class="form-control form-control-sm" id="email" type="email" placeholder="Email" required value="<%= user.emails[0] %>" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <label for="phone"> Telefone </label>
+                                        <input class="form-control form-control-sm" id="phone" type="string" placeholder="Telefone com DD" required value="<%= user.phones[0] %>" />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <!-- Birthday -->
+                                    <div class="form-group">
+                                        <!-- Label -->
+                                        <label>Data de nascimento</label>
+                                        <!-- Inputs -->
+                                        <div class="form-row">
+                                            <div class="col-12 col-sm-auto pb-3">
+                                                <!-- Date -->
+                                                <label class="sr-only" for="day"> Data </label>
+                                                <select class="custom-select custom-select-sm" id="day" onchange="validateBirthday();" value="<%= user.birthdate?.split('T')[0].split('-')[2] %>">
+                                                    <option value="">Dia</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>7</option>
+                                                    <option>8</option>
+                                                    <option>9</option>
+                                                    <option>10</option>
+                                                    <option>11</option>
+                                                    <option>12</option>
+                                                    <option>13</option>
+                                                    <option>14</option>
+                                                    <option>15</option>
+                                                    <option>16</option>
+                                                    <option>17</option>
+                                                    <option>18</option>
+                                                    <option>19</option>
+                                                    <option>20</option>
+                                                    <option>21</option>
+                                                    <option>22</option>
+                                                    <option>23</option>
+                                                    <option>24</option>
+                                                    <option>25</option>
+                                                    <option>26</option>
+                                                    <option>27</option>
+                                                    <option>28</option>
+                                                    <option>29</option>
+                                                    <option>30</option>
+                                                    <option>31</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm pb-3">
+                                                <!-- Date -->
+                                                <label class="sr-only" for="month"> Mês </label>
+                                                <select
+                                                    class="custom-select custom-select-sm"
+                                                    id="month"
+                                                    onchange="validateBirthday();"
+                                                    value="<%= Number(user.birthdate?.split('T')[0].split('-')[1]) || '' %>"
+                                                >
+                                                    <option value="">Mês</option>
+                                                    <option value="1">Janeiro</option>
+                                                    <option value="2">Fevereiro</option>
+                                                    <option value="3">Março</option>
+                                                    <option value="4">Abril</option>
+                                                    <option value="5">Maio</option>
+                                                    <option value="6">Junho</option>
+                                                    <option value="7">Julho</option>
+                                                    <option value="8">Agosto</option>
+                                                    <option value="9">Setembro</option>
+                                                    <option value="10">Outubro</option>
+                                                    <option value="11">Novembro</option>
+                                                    <option value="12">Dezembro</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-auto">
+                                                <!-- Date -->
+                                                <label class="sr-only" for="year"> Ano </label>
+                                                <select class="custom-select custom-select-sm" id="year" onchange="validateBirthday();" value="<%= user.birthdate?.split('T')[0].split('-')[0] %>">
+                                                    <option value="">Ano</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <!-- Button -->
+                                    <button class="btn btn-dark ml-auto" onclick="saveProfile()">Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+        <div class="toolbar">
+            <button onclick="window.location.href = '/';"><i class="far fa-store"></i><span>Inicio</span></button>
+            <button onclick="window.location.href = '/categories';"><i class="far fa-bars"></i><span>Categorias</span></button>
+            <button onclick="viewCart();"><i class="far fa-shopping-cart"></i><span>Carrinho</span></button>
+            <button class="active" onclick="viewAccount();"><i class="far fa-user"></i><span>Conta</span></button>
+        </div>
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            var CpfCnpjMaskBehavior = function (val) {
+                    return val.replace(/\D/g, "").length <= 11 ? "000.000.000-009" : "00.000.000/0000-00";
+                },
+                cpfCnpjpOptions = {
+                    onKeyPress: function (val, e, field, options) {
+                        field.mask(CpfCnpjMaskBehavior.apply({}, arguments), options);
+                    }
+                };
+            $("#vat").mask(CpfCnpjMaskBehavior, cpfCnpjpOptions);
+            $("#phone").mask("(00) 00000 0000");
+            var today = new Date();
+            today.setYear(today.getFullYear() - 17);
+            var starting_year = today.getFullYear();
+            for (var i = 0; i < 100; i++) {
+                $("#year").append('<option value="' + (starting_year - i) + '">' + (starting_year - i) + "</option>");
+            }
+            $("#day").val($("#day").attr("value")).change();
+            $("#month").val($("#month").attr("value")).change();
+            $("#year").val($("#year").attr("value")).change();
+            $("input").each(function () {
+                var input = $(this).on("keyup", function () {
+                    $(this).removeClass("is-invalid");
+                });
+            });
+            $("select").each(function () {
+                var input = $(this).on("change", function () {
+                    $(this).removeClass("is-invalid");
+                });
+            });
+            function validateBirthday() {
+                $("#day").removeClass("is-invalid");
+                $("#month").removeClass("is-invalid");
+                $("#year").removeClass("is-invalid");
+            }
+            async function saveProfile() {
+                var valid = true;
+                var birthday;
+                if ($("#day").val() || $("#month").val() || $("#year").val()) {
+                    if (!$("#day").val() || !$("#month").val() || !$("#year").val()) {
+                        $("#day").addClass("is-invalid");
+                        $("#month").addClass("is-invalid");
+                        $("#year").addClass("is-invalid");
+                        valid = false;
+                    } else {
+                        birthday = new Date(Number($("#year").val()), Number($("#month").val()) - 1, Number($("#day").val()));
+                    }
+                }
+                if ($("#name").val().length < 3) {
+                    $("#name").addClass("is-invalid");
+                    valid = false;
+                }
+                if ($("#phone").val().length !== 15) {
+                    $("#phone").addClass("is-invalid");
+                    valid = false;
+                }
+                if ($("#email").val().length && !$("#email").val().includes("@")) {
+                    $("#email").addClass("is-invalid");
+                    valid = false;
+                }
+                if (valid) {
+                    $("#loading").modal("show");
+                    try {
+                        await makeRequest({
+                            method: "POST",
+                            path: `/clients/profile`,
+                            data: {
+                                name: $("#name").val(),
+                                phones: [$("#phone").val().replace(/\D+/g, "")],
+                                emails: [$("#email").val()],
+                                vat: $("#vat").val().replace(/\D+/g, ""),
+                                birthdate: birthday
+                            }
+                        });
+                        window.location.href = "/profile";
+                    } catch (error) {
+                        $("#loading").modal("hide");
+                        $("#error").modal("show");
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

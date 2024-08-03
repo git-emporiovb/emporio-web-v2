@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese - Cartão</title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .card-img {
+                position: relative;
+                padding-top: 100%;
+                left: 0;
+                top: 0;
+            }
+            .card-img img {
+                margin-left: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+            .product-image img {
+                max-height: 270px;
+                object-fit: contain;
+            }
+            @media only screen and (min-width: 1200px) {
+                .col-lg-24 {
+                    flex: 0 0 20%;
+                    max-width: 20%;
+                }
+            }
+        </style>
+    </head>
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+        <div class="toolbar">
+            <button onclick="window.location.href = '/';"><i class="far fa-store"></i><span>Inicio</span></button>
+            <button onclick="window.location.href = '/categories';"><i class="far fa-bars"></i><span>Categorias</span></button>
+            <button onclick="viewCart();"><i class="far fa-shopping-cart"></i><span>Carrinho</span></button>
+            <button class="active" onclick="viewAccount();"><i class="far fa-user"></i><span>Conta</span></button>
+        </div>
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- BREADCRUMB -->
+            <nav class="py-5 hide-mobile">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Breadcrumb -->
+                            <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                                <li class="breadcrumb-item">
+                                    <a class="text-gray-400" href="/">Início</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a class="text-gray-400" href="/cards">Cartões</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- CONTENT -->
+            <section class="pt-7 pb-12">
+                <div class="container">
+                    <div class="row hide-mobile">
+                        <div class="col-12 text-center">
+                            <!-- Heading -->
+                            <h3 class="mb-10">Novo cartão</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3 d-none d-md-block">
+                            <!-- Nav -->
+                            <nav class="mb-10 mb-md-0">
+                                <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/orders"> Pedidos </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/profile"> Perfil </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/addresses"> Endereços </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle active" href="/cards"> Cartões </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/logout"> Sair </a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+                            <!-- Heading -->
+                            <h6 class="mb-7 d-none">Adicionar cartão de crédito</h6>
+
+                            <!-- Form -->
+                            <div class="form-row">
+                                <div class="col-12 col-md-6">
+                                    <label for="checkoutPaymentCardCVV">Cartão de crédito</label>
+                                    <div class="input-group mb-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon2" style="padding: 10px 15px"
+                                                ><img id="checkoutPaymentCardIssuer" src="/default.svg" style="width: 35px"
+                                            /></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="checkoutPaymentCardNumber" placeholder="Número do cartão" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group mb-4 has-validation">
+                                        <label for="checkoutPaymentCardName">Nome no cartão</label>
+                                        <input class="form-control form-control-sm" id="checkoutPaymentCardName" type="text" placeholder="Nome" required autocomplete="cc-name" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="checkoutPaymentCardCVV">CVV</label>
+                                    <div class="input-group input-group-merge mb-4">
+                                        <input class="form-control form-control-sm" id="checkoutPaymentCardCVV" type="text" placeholder="CVV" required autocomplete="cc-csc" />
+                                        <div class="input-group-append">
+                                            <span
+                                                class="input-group-text"
+                                                data-toggle="popover"
+                                                data-placement="top"
+                                                data-trigger="hover"
+                                                data-content="The CVV Number on your credit card or debit card is a 3 digit number on VISA, MasterCard and Discover branded credit and debit cards."
+                                            >
+                                                <i class="fe fe-help-circle"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group mb-md-0">
+                                        <label for="checkoutPaymentCardMonth">Mês de expiração</label>
+                                        <select class="custom-select custom-select-sm" id="checkoutPaymentCardMonth" autocomplete="cc-exp-month">
+                                            <option value="choose">Escolher</option>
+                                            <option value="1">1 - Janeiro</option>
+                                            <option value="2">2 - Fevereiro</option>
+                                            <option value="3">3 - Março</option>
+                                            <option value="4">4 - Abril</option>
+                                            <option value="5">5 - Maio</option>
+                                            <option value="6">6 - Junho</option>
+                                            <option value="7">7 - Julho</option>
+                                            <option value="8">8 - Agosto</option>
+                                            <option value="9">9 - Setembro</option>
+                                            <option value="10">10 - Outubro</option>
+                                            <option value="11">11 - Novembro</option>
+                                            <option value="12">12 - Dezembro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group mb-md-0">
+                                        <label for="checkoutPaymentCardYear">Ano de expiração</label>
+                                        <select class="custom-select custom-select-sm" id="checkoutPaymentCardYear" autocomplete="cc-exp-year">
+                                            <option value="choose">Escolher</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <button class="btn btn-dark ml-auto" type="submit" onclick="saveCard();">Salvar cartão</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            var today = new Date();
+            var starting_year = today.getFullYear();
+            for (var i = 0; i < 20; i++) {
+                $("#checkoutPaymentCardYear").append('<option value="' + (starting_year + i) + '">' + (starting_year + i) + "</option>");
+            }
+            var cleave = new Cleave("#checkoutPaymentCardCVV", {
+                blocks: [4],
+                uppercase: true
+            });
+            var issuer;
+            var cleaveCreditCard = new Cleave("#checkoutPaymentCardNumber", {
+                creditCard: true,
+                onCreditCardTypeChanged: function (type) {
+                    issuer = type;
+                    if (type === "visa") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./visa.svg");
+                    } else if (type === "mastercard") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./mastercard.svg");
+                    } else if (type === "maestro") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./maestro.svg");
+                    } else if (type === "amex") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./amex.svg");
+                    } else if (type === "elo") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./elo.svg");
+                    } else if (type === "hipercard") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./hipercard.svg");
+                    } else if (type === "diners") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./diners.svg");
+                    } else if (type === "jcb") {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./jcb.svg");
+                    } else {
+                        $("#checkoutPaymentCardIssuer").attr("src", "./default.svg");
+                    }
+                }
+            });
+            $("input").each(function () {
+                var input = $(this).on("keyup", function () {
+                    $(this).removeClass("is-invalid");
+                });
+            });
+            $("select").each(function () {
+                var input = $(this).on("change", function () {
+                    $(this).removeClass("is-invalid");
+                });
+            });
+            async function saveCard() {
+                var valid = true;
+                if (!$("#checkoutPaymentCardNumber").val()) {
+                    valid = false;
+                    $("#checkoutPaymentCardNumber").addClass("is-invalid");
+                }
+                if ($("#checkoutPaymentCardName").val().length < 3) {
+                    valid = false;
+                    $("#checkoutPaymentCardName").addClass("is-invalid");
+                }
+                if ($("#checkoutPaymentCardCVV").val().length < 3 || $("#checkoutPaymentCardCVV").val().length > 4) {
+                    valid = false;
+                    $("#checkoutPaymentCardCVV").addClass("is-invalid");
+                }
+                if ($("#checkoutPaymentCardMonth").val() === "choose") {
+                    valid = false;
+                    $("#checkoutPaymentCardMonth").addClass("is-invalid");
+                }
+                if ($("#checkoutPaymentCardYear").val() === "choose") {
+                    valid = false;
+                    $("#checkoutPaymentCardYear").addClass("is-invalid");
+                }
+                if ($("#checkoutPaymentCardInstallments").val() === "choose") {
+                    valid = false;
+                    $("#checkoutPaymentCardInstallments").addClass("is-invalid");
+                }
+                if (!issuer) {
+                    valid = false;
+                    $("#checkoutPaymentCardInstallments").addClass("is-invalid");
+                }
+                if (valid) {
+                    $("#loading").modal("show");
+                    try {
+                        await makeRequest({
+                            method: "POST",
+                            path: `/cards`,
+                            data: {
+                                type: "credit",
+                                name: $("#checkoutPaymentCardName").val(),
+                                number: $("#checkoutPaymentCardNumber").val().replace(/\D+/g, ""),
+                                expiration: `${zeroPad($("#checkoutPaymentCardMonth").val(), 2)}/${zeroPad($("#checkoutPaymentCardYear").val(), 2)}`,
+                                cvv: $("#checkoutPaymentCardCVV").val(),
+                                issuer: issuer
+                            }
+                        });
+                        window.location.href = "/cards";
+                    } catch (error) {
+                        $("#checkoutPaymentCardNumber").addClass("is-invalid");
+                        $("#loading").modal("hide");
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

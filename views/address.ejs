@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <!-- Title -->
+        <title>Emporio Villa Borghese - Endereço</title>
+        <%- include ("./components/head") %>
+        <meta name="robots" content="index, follow" />
+        <style type="text/css">
+            .card-img {
+                position: relative;
+                padding-top: 100%;
+                left: 0;
+                top: 0;
+            }
+            .card-img img {
+                margin-left: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+            .product-image img {
+                max-height: 270px;
+                object-fit: contain;
+            }
+            @media only screen and (min-width: 1200px) {
+                .col-lg-24 {
+                    flex: 0 0 20%;
+                    max-width: 20%;
+                }
+            }
+        </style>
+    </head>
+    <body id="homeSection">
+        <!-- ========== HEADER ========== -->
+        <%- include ("./components/navbar") %>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- BREADCRUMB -->
+            <nav class="py-5 hide-mobile">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Breadcrumb -->
+                            <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                                <li class="breadcrumb-item">
+                                    <a class="text-gray-400" href="/">Início</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a class="text-gray-400" href="/addresses">Endereços</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- CONTENT -->
+            <section class="pt-7 pb-12">
+                <div class="container">
+                    <div class="row hide-mobile">
+                        <div class="col-12 text-center">
+                            <!-- Heading -->
+                            <h3 class="mb-10">Endereço</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3 d-none d-md-block">
+                            <!-- Nav -->
+                            <nav class="mb-10 mb-md-0">
+                                <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/orders"> Pedidos </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/profile"> Perfil </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle active" href="/addresses"> Endereços </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/cards"> Cartões </a>
+                                    <a class="list-group-item list-group-item-action dropright-toggle" href="/logout"> Sair </a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+                            <!-- Heading -->
+                            <h6 class="mb-7 d-none">Endereço</h6>
+                            <!-- Form -->
+                            <div class="form-row py-5">
+                                <div class="col-12 col-md-4">
+                                    <!-- Mobile Phone -->
+                                    <div class="form-group">
+                                        <label for="zip">CEP</label>
+                                        <input
+                                            class="form-control form-control-sm"
+                                            id="zip"
+                                            type="text"
+                                            name="zip"
+                                            placeholder="CEP"
+                                            maxlength="9"
+                                            required
+                                            autocomplete="postal-code"
+                                            value="<%= address.zip %>"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <!-- First Name -->
+                                    <div class="form-group">
+                                        <label for="street">Endereço</label>
+                                        <input
+                                            class="form-control form-control-sm"
+                                            id="street"
+                                            type="text"
+                                            name="street"
+                                            placeholder="Rua, avenida, etc..."
+                                            required
+                                            autocomplete="address-line1"
+                                            value="<%= address.street %>"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <!-- First Name -->
+                                    <div class="form-group">
+                                        <label for="number">Número</label>
+                                        <input
+                                            class="form-control form-control-sm"
+                                            id="number"
+                                            type="number"
+                                            name="number"
+                                            placeholder="Numero"
+                                            required
+                                            autocomplete="address-line2"
+                                            value="<%= address.number %>"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <!-- First Name -->
+                                    <div class="form-group">
+                                        <label for="apartment">Complemento</label>
+                                        <input
+                                            class="form-control form-control-sm"
+                                            id="apartment"
+                                            type="text"
+                                            name="apartment"
+                                            placeholder="Apartamento ou unidade"
+                                            required
+                                            autocomplete="address-line3"
+                                            value="<%= address.apartment %>"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <!-- First Name -->
+                                    <div class="form-group">
+                                        <label for="neighbourhood">Bairro</label>
+                                        <input
+                                            class="form-control form-control-sm"
+                                            id="neighbourhood"
+                                            type="text"
+                                            name="neighbourhood"
+                                            placeholder="Bairro"
+                                            required
+                                            autocomplete="address-level3"
+                                            value="<%= address.neighbourhood %>"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <!-- First Name -->
+                                    <div class="form-group">
+                                        <label for="city">Cidade</label>
+                                        <input
+                                            class="form-control form-control-sm"
+                                            id="city"
+                                            type="text"
+                                            name="city"
+                                            placeholder="Cidade"
+                                            required
+                                            autocomplete="address-level2"
+                                            value="<%= address.city %>"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group mb-md-0">
+                                        <label for="state">Estado</label>
+                                        <select class="custom-select custom-select-sm" id="state" name="state" autocomplete="address-level1" value="<%= address.state %>">
+                                            <option value="SP">Sao Paulo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <button class="btn btn-dark ml-auto" type="submit" onclick="saveAddress();">Salvar endereço</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+        <div class="toolbar">
+            <button onclick="window.location.href = '/';"><i class="far fa-store"></i><span>Inicio</span></button>
+            <button onclick="window.location.href = '/categories';"><i class="far fa-bars"></i><span>Categorias</span></button>
+            <button onclick="viewCart();"><i class="far fa-shopping-cart"></i><span>Carrinho</span></button>
+            <button class="active" onclick="viewAccount();"><i class="far fa-user"></i><span>Conta</span></button>
+        </div>
+        <!-- ========== FOOTER ========== -->
+        <%- include ("./components/footer") %>
+        <!-- ========== END FOOTER ========== -->
+
+        <!-- Go to Top -->
+        <a
+            class="js-go-to go-to position-fixed"
+            href="javascript:;"
+            style="visibility: hidden"
+            data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'
+        >
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <!-- End Go to Top -->
+        <%- include ("./components/scripts") %>
+        <script type="text/javascript">
+            var cleave = new Cleave('[name="zip"]', {
+                delimiter: "-",
+                blocks: [5, 3],
+                uppercase: true
+            });
+            $("input").each(function () {
+                var input = $(this).on("keyup", function () {
+                    $(this).removeClass("is-invalid");
+                });
+            });
+            $("select").each(function () {
+                var input = $(this).on("change", function () {
+                    $(this).removeClass("is-invalid");
+                });
+            });
+            var search;
+            var input = $('[name="zip"]');
+            input.off("keyup");
+            input.off("keydown");
+            input.on("keyup", function () {
+                clearTimeout(search);
+                search = setTimeout(function () {
+                    if ($('[name="zip"]').val().length === 9) {
+                        $(this).removeClass("is-invalid");
+                        obtainAddress();
+                    }
+                }, 100);
+            });
+            input.on("keydown", function () {
+                clearTimeout(search);
+            });
+            input.keyup();
+            function obtainAddress() {
+                if ($("#zip").val().length !== 9) {
+                    $("#zip").addClass("is-invalid");
+                }
+                if ($("#street").val().length === 0) {
+                    $("#street").addClass("is-invalid");
+                }
+                if ($("#number").val().length === 0) {
+                    $("#number").addClass("is-invalid");
+                }
+                if ($("#neighbourhood").val().length === 0) {
+                    $("#neighbourhood").addClass("is-invalid");
+                }
+                if ($("#city").val().length === 0) {
+                    $("#city").addClass("is-invalid");
+                }
+                if ($("#state").val().length === 0) {
+                    $("#state").addClass("is-invalid");
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/obtainAddress",
+                    data: JSON.stringify({
+                        zip: $('[name="zip"]').val()
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if (response.erro) {
+                            $(this).addClass("is-invalid");
+                        } else if (response.logradouro) {
+                            $('[name="zip"]').val(response.cep);
+                            $('[name="street"]').val(response.logradouro);
+                            $('[name="neighbourhood"]').val(response.bairro);
+                            $('[name="city"]').val(response.localidade);
+                            $('[name="state"]').val(response.uf);
+                        }
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            }
+            async function saveAddress() {
+                var valid = true;
+                if ($("#zip").val().length !== 9) {
+                    $("#zip").addClass("is-invalid");
+                    valid = false;
+                }
+                if ($("#street").val().length === 0) {
+                    $("#street").addClass("is-invalid");
+                    valid = false;
+                }
+                if ($("#number").val().length === 0) {
+                    $("#number").addClass("is-invalid");
+                    valid = false;
+                }
+                if ($("#neighbourhood").val().length === 0) {
+                    $("#neighbourhood").addClass("is-invalid");
+                    valid = false;
+                }
+                if ($("#city").val().length === 0) {
+                    $("#city").addClass("is-invalid");
+                    valid = false;
+                }
+                if ($("#state").val().length === 0) {
+                    $("#state").addClass("is-invalid");
+                    valid = false;
+                }
+                if (valid) {
+                    $("#loading").modal("show");
+                    try {
+                        await makeRequest({
+                            method: "POST",
+                            path: `/addresses`,
+                            data: {
+                                street: $("#street").val(),
+                                number: Number($("#number").val().replace(/\D+/g, "")),
+                                apartment: $("#apartment").val(),
+                                neighbourhood: $("#neighbourhood").val(),
+                                city: $("#city").val(),
+                                state: $("#state").val(),
+                                zip: $("#zip").val()
+                            }
+                        });
+                        window.location.href = "/addresses";
+                    } catch (error) {
+                        $("#loading").modal("hide");
+                        $("#error").modal("show");
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
